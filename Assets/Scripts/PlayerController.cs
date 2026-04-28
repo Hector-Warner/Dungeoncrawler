@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     public int speed;
     float horizontal;
     float vertical;
+    float movementAdjustment = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,11 +22,18 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (horizontal != 0 && vertical != 0)
+        {
+            movementAdjustment = 0.7f;
+        } else
+        {
+            movementAdjustment = 1;
+        }
         CharMovement();
     }
 
     void CharMovement()
     {
-        myRigidBody.linearVelocity = new Vector2(horizontal * speed, vertical * speed);
+        myRigidBody.linearVelocity = new Vector2(horizontal * speed * movementAdjustment, vertical * speed * movementAdjustment);
     }
 }
