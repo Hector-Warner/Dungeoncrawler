@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 580443597197631142}
   - component: {fileID: 4367772288903098964}
-  - component: {fileID: 2457032906599346402}
   m_Layer: 3
   m_Name: Grid
   m_TagString: Untagged
@@ -46,36 +45,6 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
---- !u!114 &2457032906599346402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2817457084801239909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06c6c01da74aa6643a3a6a9c917ddc1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TileGenerationScript
-  width: 16
-  height: 16
-  tiles:
-  - {fileID: 11400000, guid: 007727e57fb5a9845a24f449db8a667e, type: 2}
-  - {fileID: 11400000, guid: 61d0b3b9a757efc48a5ded39ff1cb611, type: 2}
-  - {fileID: 11400000, guid: 7fc08c226343a5f41ae5a09252dea6b4, type: 2}
-  - {fileID: 11400000, guid: c73ed8515d33146479959002a8fd032f, type: 2}
-  - {fileID: 11400000, guid: 767f823ad65ce5a4a8f7b49d529de74e, type: 2}
-  - {fileID: 11400000, guid: d35ec6d7baa28e3498c9133e112e0bcb, type: 2}
-  - {fileID: 11400000, guid: b6ad6d422c89fed4b8f4b4330c4838af, type: 2}
-  - {fileID: 11400000, guid: e292e177b00289542b55e1d06acf08df, type: 2}
-  walls:
-  - {fileID: 11400000, guid: 80550f744b90d34498a64f0b1e97076e, type: 2}
-  - {fileID: 11400000, guid: ab3c5ac71272a9842b90508468d51b01, type: 2}
-  - {fileID: 11400000, guid: 07a0036ba7026f94eb81bc914a77349f, type: 2}
-  chunkSize: 16
-  tileMapPrefab: {fileID: 7308799926461443387}
-  playerController: {fileID: 0}
 --- !u!1 &5226666732440329572
 GameObject:
   m_ObjectHideFlags: 0
