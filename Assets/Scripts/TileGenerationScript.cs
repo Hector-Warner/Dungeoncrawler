@@ -8,14 +8,11 @@ using UnityEngine.Tilemaps;
 public class TileGenerationScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public int width = 16;
-    public int height = 16;
     public Tile[] tiles;
     public Tile[] walls;
     public int chunkSize = 16;
     public Grid tileMapPrefab;
     public PlayerController playerController;
-    int counter = 0;
     private Dictionary<Vector2Int, Grid> loadedChunks = new Dictionary<Vector2Int, Grid>();
 
     void Start()
