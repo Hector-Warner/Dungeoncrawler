@@ -251,7 +251,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8, y: 8, z: -10}
+  m_LocalPosition: {x: -0.010000229, y: -0.05000019, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -385,8 +385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c6c01da74aa6643a3a6a9c917ddc1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TileGenerationScript
-  width: 16
-  height: 16
   tiles:
   - {fileID: 11400000, guid: 007727e57fb5a9845a24f449db8a667e, type: 2}
   - {fileID: 11400000, guid: 61d0b3b9a757efc48a5ded39ff1cb611, type: 2}
@@ -398,9 +396,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e292e177b00289542b55e1d06acf08df, type: 2}
   walls:
   - {fileID: 11400000, guid: 61d0b3b9a757efc48a5ded39ff1cb611, type: 2}
+  pathTiles:
+  - {fileID: 11400000, guid: 0714e99ed49f8b046b1cbb7731500167, type: 2}
+  - {fileID: 11400000, guid: 1233646fdf2e2a149847bfdb60499ff9, type: 2}
+  - {fileID: 11400000, guid: a5f90bb9b50eb114384da5e3b709051c, type: 2}
+  - {fileID: 11400000, guid: a5f90bb9b50eb114384da5e3b709051c, type: 2}
   chunkSize: 16
   tileMapPrefab: {fileID: 4367772288903098964, guid: 5f6737c4570102148b9226f9959c8e59, type: 3}
   playerController: {fileID: 1978522586}
+  paths: []
 --- !u!4 &1457020887
 Transform:
   m_ObjectHideFlags: 0
@@ -504,7 +508,7 @@ Transform:
   m_GameObject: {fileID: 1978522583}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.9, y: 8.12, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

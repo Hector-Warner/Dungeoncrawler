@@ -15,11 +15,19 @@ public class TileGenerationScript : MonoBehaviour
     public Grid tileMapPrefab;
     public PlayerController playerController;
     private Dictionary<Vector2Int, Grid> loadedChunks = new Dictionary<Vector2Int, Grid>();
-    public List<Vector3Int> paths = new List<Vector3Int>();
+    public List<int[]> paths = new List<int[]>();
 
     void Start()
     {
-        paths.Add(new Vector3Int(50, 0, 5));
+        // X1 Y1 X2 Y2 YIntercept
+        createPath(30, 50, 20, 10, 5);
+        createPath(50, 30, 100, -30, 5);
+    }
+
+    void createPath(int x1, int y1, int x2, int y2, int yInter)
+    {
+        int[] path = { x1, y1, x2, y2, yInter };
+        paths.Add(path);
     }
 
     public void createChunk(Vector2Int chunkStart)
@@ -39,8 +47,18 @@ public class TileGenerationScript : MonoBehaviour
                 }
                 else if (checkTile(new Vector2Int(chunkStart.x * chunkSize + x, chunkStart.y * chunkSize + y)) == 1)
                 {
-                    int tileNum = Random.Range(0, pathTiles.Length);
-                    newTilemap.SetTile(new Vector3Int(x, y), pathTiles[tileNum]);
+                    int randomNum = Random.Range(0, 3);
+                    if (randomNum == 0 || randomNum == 1) 
+                    {
+                        int tileNum = Random.Range(0, pathTiles.Length);
+                        newTilemap.SetTile(new Vector3Int(x, y), pathTiles[tileNum]);
+                    } else
+                    {
+                        int tileNum = Random.Range(0, tiles.Length);
+
+                        newTilemap.SetTile(new Vector3Int(x, y), tiles[tileNum]);
+                    }
+                    
                     Debug.Log("Path: " + chunkStart.x * chunkSize + x + " " + chunkStart.y * chunkSize + y);
                 } else
                 {
@@ -56,11 +74,10 @@ public class TileGenerationScript : MonoBehaviour
     {
         for (int i = 0; i < paths.Count; i++)
         {
-            float multiplicative = (float)(paths[i].y - tileCoord.y) / (paths[i].x - tileCoord.x);
-            if (Mathf.FloorToInt(multiplicative * tileCoord.x + paths[i].z) == tileCoord.y)
+            float multiplicativeY = (float)(paths[i][1] - paths[i][3]) / (paths[i][0] - paths[i][2]);
+            float multiplicativeX = (float)(paths[i][0] - paths[i][2]) / (paths[i][1] - paths[i][3]);
+            if (Mathf.Abs(Mathf.FloorToInt(multiplicativeY * tileCoord.x + paths[i][4]) - tileCoord.y) < 4 || Mathf.Abs(Mathf.FloorToInt(multiplicativeX * (tileCoord.y - paths[i][4])) - tileCoord.x) < 4)
             {
-                int floored = Mathf.FloorToInt(multiplicative * tileCoord.x + paths[i].z);
-                Debug.Log(floored);
                 return 1;
             }
         }
