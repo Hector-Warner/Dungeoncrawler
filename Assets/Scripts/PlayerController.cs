@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     float horizontal;
     float vertical;
     float movementAdjustment = 1;
+    public bool godMode = false;
+    public GameObject camera;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,6 +20,31 @@ public class PlayerController : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (godMode == true)
+            {
+                updateGodMode();
+            } else
+            {
+                updateGodMode();
+            }
+        }
+    }
+
+    public void updateGodMode()
+    {
+        if (godMode == true)
+        {
+            speed = 5;
+            camera.GetComponent<Camera>().orthographicSize = 5;
+            godMode = false;
+        } else
+        {
+            speed = 30;
+            camera.GetComponent<Camera>().orthographicSize = 30;
+            godMode = true;
+        }
     }
 
     private void FixedUpdate()
