@@ -1,6 +1,8 @@
 using JetBrains.Annotations;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Tilemaps;
@@ -16,18 +18,29 @@ public class TileGenerationScript : MonoBehaviour
     public PlayerController playerController;
     private Dictionary<Vector2Int, Grid> loadedChunks = new Dictionary<Vector2Int, Grid>();
     public List<int[]> paths = new List<int[]>();
+    public int pathBend = 0;
 
     void Start()
     {
         // X1 Y1 X2 Y2 YIntercept
-        createPath(30, 50, 20, 10, 5);
-        createPath(50, 30, 100, -30, 5);
+        for (int i = 0; i < 12; i++)
+        {
+            createPath(Random.Range(-500,500), Random.Range(-500, 500), Random.Range(-500, 500), Random.Range(-500, 500));
+        }
+        
     }
 
-    void createPath(int x1, int y1, int x2, int y2, int yInter)
+    void createPath(int x1, int y1, int x2, int y2)
     {
+        int yInter = (int) calculateYIntercept(x1, y1, x2, y2);
         int[] path = { x1, y1, x2, y2, yInter };
         paths.Add(path);
+    }
+
+    int calculateYIntercept(int x1, int y1, int x2, int y2) 
+    {
+        int yIntercept = Mathf.FloorToInt(y1-(y2-y1)/(x2-x1)*x1);
+        return yIntercept;
     }
 
     public void createChunk(Vector2Int chunkStart)
@@ -76,14 +89,16 @@ public class TileGenerationScript : MonoBehaviour
         {
             float multiplicativeY = (float)(paths[i][1] - paths[i][3]) / (paths[i][0] - paths[i][2]);
             float multiplicativeX = (float)(paths[i][0] - paths[i][2]) / (paths[i][1] - paths[i][3]);
-            if (Mathf.Abs(Mathf.FloorToInt(multiplicativeY * tileCoord.x + paths[i][4]) - tileCoord.y) < 4 || Mathf.Abs(Mathf.FloorToInt(multiplicativeX * (tileCoord.y - paths[i][4])) - tileCoord.x) < 4)
+            if ((Mathf.Abs(Mathf.FloorToInt(multiplicativeY * tileCoord.x + paths[i][4]) - tileCoord.y) < 4 || Mathf.Abs(Mathf.FloorToInt(multiplicativeX * (tileCoord.y - paths[i][4])) - tileCoord.x) < 4) 
+                && tileCoord.x >= Mathf.Min(paths[i][0], paths[i][2])
+                && tileCoord.x <= Mathf.Max(paths[i][0], paths[i][2])
+                )
             {
                 return 1;
             }
         }
         return 0;
     }
-
     // Update is called once per frame
     void Update()
     {
