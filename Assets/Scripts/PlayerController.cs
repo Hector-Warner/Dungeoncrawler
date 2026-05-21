@@ -8,11 +8,13 @@ public class PlayerController : MonoBehaviour
     float vertical;
     float movementAdjustment = 1;
     public bool godMode = false;
-    public GameObject camera;
+    public GameObject Camera;
+    public TileGenerationScript tileGenerationScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
+
     }
 
     // Update is called once per frame
@@ -25,9 +27,21 @@ public class PlayerController : MonoBehaviour
             if (godMode == true)
             {
                 updateGodMode();
-            } else
+            }
+            else
             {
                 updateGodMode();
+            }
+        }
+        if (godMode == false)
+        {
+            if (tileGenerationScript.checkTile(new Vector2Int(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y))) == 1)
+            {
+                speed = 10;
+            }
+            else
+            {
+                speed = 5;
             }
         }
     }
@@ -37,12 +51,14 @@ public class PlayerController : MonoBehaviour
         if (godMode == true)
         {
             speed = 5;
-            camera.GetComponent<Camera>().orthographicSize = 5;
+            Camera.GetComponent<Camera>().orthographicSize = 5;
+            gameObject.GetComponent<Collider2D>().enabled = true;
             godMode = false;
         } else
         {
             speed = 30;
-            camera.GetComponent<Camera>().orthographicSize = 30;
+            Camera.GetComponent<Camera>().orthographicSize = 30;
+            gameObject.GetComponent<Collider2D>().enabled = false;
             godMode = true;
         }
     }

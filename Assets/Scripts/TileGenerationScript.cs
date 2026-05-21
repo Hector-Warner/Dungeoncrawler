@@ -13,15 +13,22 @@ public class TileGenerationScript : MonoBehaviour
     public Tile[] tiles;
     public Tile[] walls;
     public Tile[] pathTiles;
+    public Tile[] lakeTiles;
+    public Tile[] beachTiles;
     public int chunkSize = 16;
     public Grid tileMapPrefab;
     public PlayerController playerController;
     private Dictionary<Vector2Int, Grid> loadedChunks = new Dictionary<Vector2Int, Grid>();
     public List<int[]> paths = new List<int[]>();
     public int pathBend = 0;
+    public float lakeScale = 0.5f;
+    public float lakeThreshold = 0.5f;
+    float lakeOffset;
+    public float beachThreshold;
 
     void Start()
     {
+        lakeOffset = Random.Range(-10000, 10000);
         // X1 Y1 X2 Y2 YIntercept
         for (int i = 0; i < 12; i++)
         {
@@ -53,10 +60,21 @@ public class TileGenerationScript : MonoBehaviour
         {
             for (int y = 0; y < chunkSize; y++)
             {
-                if ((x == chunkSize - 1 || y == chunkSize - 1 || x == 0 || y == 0) && false)
+                int worldX = chunkStart.x * chunkSize + x;
+                int worldY = chunkStart.y * chunkSize + y;
+                Vector2 worldCoords = new Vector2Int(worldX, worldY);
+
+                float noiseX = (worldCoords.x + lakeOffset) * lakeScale;
+                float noiseY = (worldCoords.y + lakeOffset) * lakeScale;
+                float noiseValue = Mathf.PerlinNoise(noiseX, noiseY);
+                if (noiseValue > lakeThreshold && noiseValue < lakeThreshold + beachThreshold)
                 {
-                    int tileNum = Random.Range(0, walls.Length);
-                    newTilemap.SetTile(new Vector3Int(x, y), walls[tileNum]);
+                    int tileNum = Random.Range(0, beachTiles.Length);
+                    newTilemap.SetTile(new Vector3Int(x, y), beachTiles[tileNum]);
+                } else if (noiseValue < lakeThreshold)
+                {
+                    int tileNum = Random.Range(0, lakeTiles.Length);
+                    newTilemap.SetTile(new Vector3Int(x, y), lakeTiles[tileNum]);
                 }
                 else if (checkTile(new Vector2Int(chunkStart.x * chunkSize + x, chunkStart.y * chunkSize + y)) == 1)
                 {
